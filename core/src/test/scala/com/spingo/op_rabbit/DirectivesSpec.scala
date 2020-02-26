@@ -1,11 +1,14 @@
 package com.spingo.op_rabbit
 
 import com.rabbitmq.client.Envelope
-import org.scalatest.{FunSpec, Matchers, Inside}
+import org.scalatest.Inside
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
+
 import scala.concurrent.{Await, Future, Promise}
 import scala.concurrent.duration._
 
-class DirectivesSpec extends FunSpec with Matchers with Inside {
+class DirectivesSpec extends AnyFunSpec with Matchers with Inside {
   val dummyEnvelope = new Envelope(1L, false, "kthx", "bai")
 
   val acked: ReceiveResult = ReceiveResult.Ack(1L)

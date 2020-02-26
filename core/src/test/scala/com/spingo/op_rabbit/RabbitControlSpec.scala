@@ -4,11 +4,14 @@ import akka.actor._
 import akka.pattern.ask
 import com.spingo.scoped_fixtures.ScopedFixtures
 import helpers.RabbitTestHelpers
-import org.scalatest.{Inside, FunSpec, Matchers}
+import org.scalatest.Inside
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
+
 import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.concurrent.duration._
 
-class RabbitControlSpec extends FunSpec with ScopedFixtures with Matchers with RabbitTestHelpers with Inside {
+class RabbitControlSpec extends AnyFunSpec with ScopedFixtures with Matchers with RabbitTestHelpers with Inside {
 
   val _queueName = ScopedFixture[String] { setter =>
     val name = s"test-queue-rabbit-control-${Math.random()}"

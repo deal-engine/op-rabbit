@@ -1,9 +1,9 @@
 package com.spingo.op_rabbit
 
-import com.rabbitmq.client.AMQP.Channel
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class PublisherSpec extends FunSpec with Matchers {
+class PublisherSpec extends AnyFunSpec with Matchers {
   describe("Publisher.exchange") {
     it("receives a Concrete exchange definition, and topic key") {
       val exchange = Exchange.direct("hi")

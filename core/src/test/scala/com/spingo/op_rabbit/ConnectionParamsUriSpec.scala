@@ -2,11 +2,12 @@ package com.spingo.op_rabbit
 
 import com.rabbitmq.client.{Address, ConnectionFactory}
 import com.typesafe.config.{ConfigFactory, ConfigValueFactory}
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.collection.JavaConverters._
 
-class ConnectionParamsUriSpec extends FunSpec with Matchers {
+class ConnectionParamsUriSpec extends AnyFunSpec with Matchers {
   private val defaultConfig = ConfigFactory.load()
   private val connectionPath = "op-rabbit.connection"
 

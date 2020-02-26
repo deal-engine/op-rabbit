@@ -1,10 +1,11 @@
 package com.spingo.op_rabbit.properties
 
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.language.postfixOps
 
-class PropertiesSpec extends FunSpec with Matchers {
+class PropertiesSpec extends AnyFunSpec with Matchers {
   describe("Setting properties") {
     it("merges multiple HeaderValues") {
       val properties = builderWithProperties(Seq(Header("header1", "very-value1"), Header("header2", "very-value2"))).build

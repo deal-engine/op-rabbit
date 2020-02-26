@@ -2,11 +2,13 @@ package com.spingo.op_rabbit
 
 import com.spingo.scoped_fixtures.ScopedFixtures
 import com.spingo.op_rabbit.helpers.RabbitTestHelpers
-import org.scalatest.{FunSpec, Matchers}
-import scala.concurrent.ExecutionContext
-import scala.util.{Try,Failure}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class SubscriptionSpec extends FunSpec with ScopedFixtures with Matchers with RabbitTestHelpers {
+import scala.concurrent.ExecutionContext
+import scala.util.{Failure, Try}
+
+class SubscriptionSpec extends AnyFunSpec with Matchers with ScopedFixtures with RabbitTestHelpers {
 
   implicit val executionContext = ExecutionContext.global
   val queueName = s"test-queue-rabbit-control"

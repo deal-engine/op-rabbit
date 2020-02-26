@@ -1,9 +1,10 @@
 package com.spingo.op_rabbit
 
-import org.scalatest.{FunSpec, Matchers}
 import com.spingo.op_rabbit.properties._
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class MessageSpec extends FunSpec with Matchers {
+class MessageSpec extends AnyFunSpec with Matchers {
   case class Data(name: String, age: Int)
 
   describe("Message.queue") {

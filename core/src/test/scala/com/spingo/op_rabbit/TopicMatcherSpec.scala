@@ -1,7 +1,9 @@
 package com.spingo.op_rabbit
 
-import org.scalatest.{FunSpec,Matchers}
-class RoutingMatcherSpec extends FunSpec with Matchers {
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
+
+class RoutingMatcherSpec extends AnyFunSpec with Matchers {
   describe("matching topics") {
     it("matches words at the given locations") {
       val FreshFruit = TopicMatcher("fruit.*.fresh.*")

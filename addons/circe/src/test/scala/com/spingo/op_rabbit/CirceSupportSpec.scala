@@ -1,14 +1,15 @@
 package com.spingo.op_rabbit
 
-import org.scalatest.FunSpec
-import org.scalatest.Matchers
 import io.circe.{Decoder, Encoder}
 import io.circe.parser.decode
 import io.circe.syntax.EncoderOps
 import java.nio.charset.Charset
 
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
+
 case class CirceThing(a: Int)
-class CirceSupportSpec extends FunSpec with Matchers {
+class CirceSupportSpec extends AnyFunSpec with Matchers {
   import CirceSupport._
   import io.circe.generic.auto._
   val u = implicitly[RabbitUnmarshaller[CirceThing]]

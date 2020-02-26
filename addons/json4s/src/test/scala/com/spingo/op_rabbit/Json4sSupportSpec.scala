@@ -1,11 +1,11 @@
 package com.spingo.op_rabbit
 
-import org.scalatest.FunSpec
-import org.scalatest.Matchers
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
 case class Thing(a: Int)
 
-class Json4sSupportSpec extends FunSpec with Matchers {
+class Json4sSupportSpec extends AnyFunSpec with Matchers {
   import Json4sSupport.native._
   implicit val formats = org.json4s.DefaultFormats
   val u = implicitly[RabbitUnmarshaller[Thing]]

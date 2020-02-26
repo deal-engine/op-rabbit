@@ -1,10 +1,10 @@
 package com.spingo.op_rabbit
 
-import org.scalatest.FunSpec
-import org.scalatest.Matchers
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 import spray.json.DefaultJsonProtocol
 
-class SprayJsonSupportSpec extends FunSpec with Matchers with DefaultJsonProtocol {
+class SprayJsonSupportSpec extends AnyFunSpec with Matchers with DefaultJsonProtocol {
   case class Thing(a: Int)
   implicit val thingFormat = jsonFormat1(Thing)
   import SprayJsonSupport._

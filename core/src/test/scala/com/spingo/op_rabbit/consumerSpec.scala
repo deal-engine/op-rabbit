@@ -5,13 +5,16 @@ import com.rabbitmq.client.{Channel, Envelope}
 import com.rabbitmq.client.AMQP.BasicProperties
 import com.spingo.scoped_fixtures.ScopedFixtures
 import com.spingo.op_rabbit.helpers.RabbitTestHelpers
-import org.scalatest.{FunSpec, Matchers}
+
 import scala.concurrent.{Await, ExecutionContext, Future, Promise}
 import scala.concurrent.duration._
-import scala.util.{Random,Try,Failure}
+import scala.util.{Failure, Random, Try}
 import java.util.concurrent.atomic.AtomicInteger
 
-class ConsumerSpec extends FunSpec with ScopedFixtures with Matchers with RabbitTestHelpers {
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
+
+class ConsumerSpec extends AnyFunSpec with Matchers with ScopedFixtures with RabbitTestHelpers {
 
   val _queueName = ScopedFixture[String] { setter =>
     val name = s"test-queue-rabbit-control-${Math.random()}"
