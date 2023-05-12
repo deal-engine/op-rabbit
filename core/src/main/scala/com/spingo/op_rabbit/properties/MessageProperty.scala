@@ -8,7 +8,7 @@ trait MessageProperty {
   def insert(builder: Builder, headers: HeaderMap): Unit
 }
 
-private [op_rabbit] trait PropertyExtractor[T] {
+trait PropertyExtractor[T] {
   def extractorName: String = getClass.getSimpleName.replace("$", "")
   def extract(properties: BasicProperties): Option[T]
 }

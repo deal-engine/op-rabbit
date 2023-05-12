@@ -10,7 +10,7 @@ import scala.language.implicitConversions
 /**
   HListable
   */
-private [op_rabbit] trait ConjunctionMagnet[L <: HList] {
+trait ConjunctionMagnet[L <: HList] {
   type Out
   def apply(underlying: Directive[L]): Out
 }
@@ -32,8 +32,8 @@ private [op_rabbit] object ConjunctionMagnet {
 }
 
 abstract class Directive[+L <: HList] { self =>
-  private [op_rabbit] def &(magnet: ConjunctionMagnet[L] @uncheckedVariance): magnet.Out = magnet(this)
-  private [op_rabbit] def as[T](deserializer: HListDeserializer[L, T] @uncheckedVariance): Directive1[T] = new Directive1[T] {
+  def &(magnet: ConjunctionMagnet[L] @uncheckedVariance): magnet.Out = magnet(this)
+  def as[T](deserializer: HListDeserializer[L, T] @uncheckedVariance): Directive1[T] = new Directive1[T] {
     def happly(f: ::[T, HNil] => Handler): Handler = {
       self.happly { l =>
         { (p, delivery) =>
@@ -69,7 +69,7 @@ abstract class Directive[+L <: HList] { self =>
       }
     }
 
-  private [op_rabbit] def hmap[R](f: L => R)(implicit hl: HListable[R]): Directive[hl.Out] =
+  def hmap[R](f: L => R)(implicit hl: HListable[R]): Directive[hl.Out] =
     new Directive[hl.Out] {
       def happly(g: hl.Out => Handler) = self.happly { values => g(hl(f(values))) }
     }
@@ -85,7 +85,7 @@ object Directive {
   implicit def pimpApply[L <: HList](directive: Directive[L])(implicit hac: ApplyConverter[L]): hac.In ⇒ Handler = f ⇒ directive.happly(hac(f))
 
   implicit class SingleValueModifiers[T](underlying: Directive1[T]) {
-    private [op_rabbit] def map[R](f: T ⇒ R)(implicit hl: HListable[R]): Directive[hl.Out] =
+    def map[R](f: T ⇒ R)(implicit hl: HListable[R]): Directive[hl.Out] =
       underlying.hmap { case value :: HNil ⇒ f(value) }
 
     def flatMap[R <: HList](f: T ⇒ Directive[R]): Directive[R] =
