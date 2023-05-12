@@ -14,9 +14,11 @@ workflows:
           name: test
           steps:
             - run:
-                name: Compile tests
-                command: sbt +test:compile
-          setup_remote_docker: false
+                name: Run rabbitmq for testing
+                command: docker run -d --rm -p 5672:5672 rabbitmq:3-alpine
+            - run:
+                name: Run tests
+                command: sbt +test
           context: CodacyAWS
           requires:
             - codacy/checkout_and_version
