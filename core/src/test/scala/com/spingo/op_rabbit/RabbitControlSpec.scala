@@ -153,7 +153,6 @@ class RabbitControlSpec extends FunSpec with ScopedFixtures with Matchers with R
               case _ =>
                 // Added to suppress the warning:
                 // It would fail on the following input: (x: Any forSome x not in com.spingo.op_rabbit.Message.Ack)
-                ???
             }
           }
         }))
