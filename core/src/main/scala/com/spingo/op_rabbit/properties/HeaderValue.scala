@@ -148,7 +148,10 @@ object HeaderValue {
     case v: Array[Byte]                          => apply(v)
     case null                                    => NullHeaderValue
     case v: java.util.List[_] =>
-      SeqHeaderValue(v.asScala.toSeq.map { case v: Object => from(v) })
+      SeqHeaderValue(v.asScala.toSeq.map {
+        case v: Object => from(v)
+        case _ => ??? // Added to suppress: It would fail on the following input: (x: _ forSome x not in Object)
+      })
     case v: Array[Object] =>
       SeqHeaderValue(v.map(from))
     case otherwise =>

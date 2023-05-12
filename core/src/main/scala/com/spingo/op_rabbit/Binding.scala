@@ -109,8 +109,10 @@ object Binding {
       queue.declare(c)
       val bindingArgs = new java.util.HashMap[String, Object]
       bindingArgs.put("x-match", if (matchAll) "all" else "any") //any or all
-      headers.foreach { case Header(name, value) =>
-        bindingArgs.put(name, value.serializable)
+      headers.foreach {
+        case Header(name, value) =>
+          bindingArgs.put(name, value.serializable)
+        case _ => // Added to fix warning: match may not be exhaustive
       }
       c.queueBind(queueName, exchange.exchangeName, "", bindingArgs);
     }

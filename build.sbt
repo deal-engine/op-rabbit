@@ -1,23 +1,14 @@
-import java.util.Properties
-
 val json4sVersion = "3.6.6"
 val circeVersion = "0.12.3"
 val akkaVersion = "2.5.25"
 val playVersion = "2.7.4"
 
-val appProperties = {
-  val prop = new Properties()
-  IO.load(prop, new File("project/version.properties"))
-  prop
-}
-
 val assertNoApplicationConf = taskKey[Unit]("Makes sure application.conf isn't packaged")
 
 val commonSettings = Seq(
-  organization := "com.spingo",
-  version := appProperties.getProperty("version"),
-  scalaVersion := "2.12.10",
-  crossScalaVersions := Seq("2.12.10", "2.13.1"),
+  organization := "com.codacy",
+  scalaVersion := "2.12.17",
+  crossScalaVersions := Seq("2.12.17", "2.13.10"),
   libraryDependencies ++= Seq(
     "com.chuusai" %%  "shapeless" % "2.3.3",
     "com.typesafe" % "config" % "1.3.4",
@@ -30,32 +21,20 @@ val commonSettings = Seq(
     "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test",
     "com.typesafe.akka" %% "akka-slf4j" % akkaVersion % "test"
   ),
-  publishMavenStyle := true,
-  publishTo := {
-    val nexus = "https://oss.sonatype.org/"
-    if (isSnapshot.value)
-      Some("snapshots" at nexus + "content/repositories/snapshots")
-    else
-      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-  },
   licenses := Seq("Apache 2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt")),
-  homepage := Some(url("https://github.com/SpinGo/op-rabbit")),
-  pomExtra := {
-    <scm>
-      <url>https://github.com/SpinGo/op-rabbit</url>
-      <connection>scm:git:git@github.com:SpinGo/op-rabbit.git</connection>
-    </scm>
-    <developers>
-      <developer>
-        <id>timcharper</id>
-        <name>Tim Harper</name>
-        <url>http://spingo.com</url>
-      </developer>
-    </developers>
-  },
-  autoAPIMappings := true // sbt-unidoc setting
-
-)
+  homepage := Some(url("https://github.com/codacy/op-rabbit")),
+  scmInfo := Some(
+    ScmInfo(url("https://github.com/codacy/op-rabbit"), "scm:git@github.com:codacy/op-rabbit.git")
+  ),
+  autoAPIMappings := true, // sbt-unidoc setting
+  // this setting is not picked up properly from the plugin
+  pgpPassphrase := Option(System.getenv("SONATYPE_GPG_PASSPHRASE")).map(_.toCharArray),
+  Compile / doc / sources := Seq.empty,
+  scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, 13)) => "-Xlint:-byname-implicit" :: Nil
+    case _ => Nil
+  })
+) ++ publicMvnPublish
 
 lazy val `op-rabbit` = (project in file(".")).
   enablePlugins(ScalaUnidocPlugin).
@@ -120,7 +99,7 @@ lazy val upickle = (project in file("./addons/upickle")).
     libraryDependencies += "com.lihaoyi" %% "upickle" % (
       CrossVersion.partialVersion(scalaVersion.value) match {
         case Some((2, 11)) => "0.7.4"
-        case _ => "0.8.0"
+        case _ => "3.1.0"
       }
     )).
   dependsOn(core)
@@ -137,11 +116,11 @@ lazy val `akka-stream` = (project in file("./addons/akka-stream")).
   settings(
     name := "op-rabbit-akka-stream",
     libraryDependencies ++= Seq(
-      "com.timcharper"    %% "acked-streams" % "2.1.1",
+      "com.codacy"        %% "acked-streams" % "0.0.1",
       "com.typesafe.akka" %% "akka-stream" % akkaVersion),
-    unmanagedResourceDirectories in Test ++= Seq(
+    Test / unmanagedResourceDirectories ++= Seq(
       file(".").getAbsoluteFile / "core" / "src" / "test" / "resources"),
-    unmanagedSourceDirectories in Test ++= Seq(
+    Test / unmanagedSourceDirectories ++= Seq(
       file(".").getAbsoluteFile / "core" / "src" / "test" / "scala" / "com" / "spingo" / "op_rabbit" / "helpers")).
   dependsOn(core)
 

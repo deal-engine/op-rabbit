@@ -203,8 +203,8 @@ private [op_rabbit] class SubscriptionActor(
 
   initialize()
 
-  override def preStart: Unit = {
-    val system = context.system
+  override def preStart(): Unit = {
+    context.system
     connection ! CreateChannel(ChannelActor.props({(channel: Channel, channelActor: ActorRef) =>
       log.debug(s"Channel created; ${channel}")
       self ! ChannelConnected(channel, channelActor)

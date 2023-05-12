@@ -18,6 +18,8 @@ package com.spingo.op_rabbit
 
 import shapeless._
 
+import scala.language.implicitConversions
+
 private [op_rabbit] abstract class HListDeserializerInstances { self: HListDeserializer.type =>
 [#  implicit def hld1[Z, [#T1, R1#]]
       (construct: ([#R1#]) => Z)

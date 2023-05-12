@@ -128,7 +128,7 @@ class RabbitControlSpec extends FunSpec with ScopedFixtures with Matchers with R
         }
         await(subscription.initialized)
 
-        val sender = actorSystem.actorOf(Props(new Actor {
+        actorSystem.actorOf(Props(new Actor {
           val factory = Message.factory(Publisher.queue(queueName))
           var i = 0
           override def preStart(): Unit = {
@@ -147,8 +147,13 @@ class RabbitControlSpec extends FunSpec with ScopedFixtures with Matchers with R
           }
 
           def doSend(n: Int): Unit = {
-            (rabbitControl ? factory(n)) foreach { case m: Message.Ack =>
-              counter ! (('confirm, n))
+            (rabbitControl ? factory(n)) foreach {
+              case m: Message.Ack =>
+                counter ! (('confirm, n))
+              case _ =>
+                // Added to suppress the warning:
+                // It would fail on the following input: (x: Any forSome x not in com.spingo.op_rabbit.Message.Ack)
+                ???
             }
           }
         }))

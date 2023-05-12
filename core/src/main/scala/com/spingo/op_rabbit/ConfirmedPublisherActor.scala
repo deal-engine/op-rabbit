@@ -1,6 +1,6 @@
 package com.spingo.op_rabbit
 
-import akka.actor.{Actor, ActorLogging, ActorRef, Stash, Status, Terminated}
+import akka.actor.{Actor, ActorLogging, ActorRef, Stash, Terminated}
 import com.rabbitmq.client.{Channel, ConfirmListener, ShutdownListener, ShutdownSignalException}
 import com.newmotion.akka.rabbitmq.{ChannelActor, ChannelCreated, CreateChannel}
 import scala.collection.mutable
@@ -14,7 +14,7 @@ private [op_rabbit] class ConfirmedPublisherActor(connection: ActorRef) extends 
   private case class Ack(deliveryTag: Long, multiple: Boolean) extends InternalAckOrNack
   private case class Nack(deliveryTag: Long, multiple: Boolean) extends InternalAckOrNack
 
-  override def preStart =
+  override def preStart() =
     connection ! CreateChannel(ChannelActor.props({ (channel, actor) =>
       channel.confirmSelect()
       channel.addConfirmListener(new ConfirmListener {
@@ -31,7 +31,7 @@ private [op_rabbit] class ConfirmedPublisherActor(connection: ActorRef) extends 
       self ! channel
     }), Some("confirmed-publisher-channel"))
 
-  override def postStop =
+  override def postStop() =
     channelActor foreach (context stop _)
 
   private var channelActor: Option[ActorRef] = None

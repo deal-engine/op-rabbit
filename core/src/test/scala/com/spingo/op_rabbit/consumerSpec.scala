@@ -159,7 +159,6 @@ class ConsumerSpec extends FunSpec with ScopedFixtures with Matchers with Rabbit
         new RedeliveryFixtures {
           val queueName          = "redeliveryFailedQueueTest"
           val abandonedQueueName = s"op-rabbit.abandoned.${queueName}"
-          val retryQueueName     = s"op-rabbit.retry.${queueName}"
           val retryCount         = 2
 
           try {

@@ -12,7 +12,7 @@ import com.timcharper.acked.AckedSource
 import com.spingo.scoped_fixtures.ScopedFixtures
 import org.scalatest.{FunSpec, Matchers}
 import scala.concurrent.{ExecutionContext, Future, Promise}
-import scala.util.{Try,Failure}
+import scala.util.Try
 
 class MessagePublisherSinkSpec extends FunSpec with ScopedFixtures with Matchers with RabbitTestHelpers {
   implicit val executionContext = ExecutionContext.global
@@ -72,7 +72,6 @@ class MessagePublisherSinkSpec extends FunSpec with ScopedFixtures with Matchers
 
     it("propagates publish exceptions to promise") {
       new RabbitFixtures {
-        val factory = Message.factory(Publisher.queue(Queue.passive("no-existe")))
         val sink = MessagePublisherSink(rabbitControl)
 
         val data = range map { i => (Promise[Unit], i) }
@@ -82,7 +81,7 @@ class MessagePublisherSinkSpec extends FunSpec with ScopedFixtures with Matchers
           runWith(sink)
 
         await(published)
-        val Failure(ex) = Try(await(data.head._1.future))
+        val ex = Try(await(data.head._1.future)).failed.get
         ex.getMessage should include ("no queue 'no-existe'")
       }
     }

@@ -1,9 +1,8 @@
 package com.spingo.op_rabbit
 
-import akka.actor.ActorSystem
 import com.rabbitmq.client.AMQP.BasicProperties
 import com.rabbitmq.client.Channel
-import scala.concurrent.{Future, Promise}
+import scala.concurrent.Promise
 import scala.concurrent.duration._
 import scala.util.Try
 import com.spingo.op_rabbit.properties._
@@ -132,8 +131,7 @@ object StatusCheckMessage {
 /**
   Send this message to RabbitControl to check the status of our connection to the RabbitMQ broker.
   */
-class StatusCheckMessage(timeout: Duration = 5 seconds)(implicit actorSystem: ActorSystem)
-    extends MessageForPublicationLike {
+class StatusCheckMessage(timeout: Duration = 5.seconds) extends MessageForPublicationLike {
   val dropIfNoChannel = true
   private val isOpenPromise = Promise[Unit]
 
@@ -141,14 +139,6 @@ class StatusCheckMessage(timeout: Duration = 5 seconds)(implicit actorSystem: Ac
     Future fails with [[StatusCheckMessage$.CheckException CheckException]] if connection is not okay
     */
   val okay = isOpenPromise.future
-
-  private def withTimeout[T](what:String, duration: FiniteDuration)(f: => Future[T]): Future[T] = {
-    import actorSystem.dispatcher
-    val timer = akka.pattern.after(duration, using = actorSystem.scheduler) {
-      Future.failed(new scala.concurrent.TimeoutException(s"Response not received from ${what} after ${duration}."))
-    }
-    Future.firstCompletedOf(timer :: f :: Nil)
-  }
 
   def apply(c: com.rabbitmq.client.Channel): Unit = {
     isOpenPromise.tryComplete(Try {

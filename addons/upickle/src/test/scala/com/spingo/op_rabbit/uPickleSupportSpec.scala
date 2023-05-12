@@ -7,7 +7,7 @@ case class Thing(a: Int)
 
 object Thing {
   import upickle.default.{ReadWriter => RW, macroRW}
-  implicit val rw: RW[Thing] = macroRW
+  implicit val rw: RW[Thing] = macroRW[Thing]
 }
 
 class upickleSupportSpec extends FunSpec with Matchers {

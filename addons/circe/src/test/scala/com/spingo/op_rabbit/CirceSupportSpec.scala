@@ -2,10 +2,6 @@ package com.spingo.op_rabbit
 
 import org.scalatest.FunSpec
 import org.scalatest.Matchers
-import io.circe.{Decoder, Encoder}
-import io.circe.parser.decode
-import io.circe.syntax.EncoderOps
-import java.nio.charset.Charset
 
 case class CirceThing(a: Int)
 class CirceSupportSpec extends FunSpec with Matchers {
@@ -36,7 +32,7 @@ class CirceSupportSpec extends FunSpec with Matchers {
     }
 
     it("serializes the provided content") {
-      val body = m.marshall(CirceThing(5))
+      m.marshall(CirceThing(5))
     }
 
     it("provides the appropriate content headers") {

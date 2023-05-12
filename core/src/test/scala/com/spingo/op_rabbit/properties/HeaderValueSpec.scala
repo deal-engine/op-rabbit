@@ -1,10 +1,7 @@
 package com.spingo.op_rabbit.properties
 
 import org.scalatest.{FunSpec, Matchers}
-import com.spingo.op_rabbit.properties._
 import com.rabbitmq.client.impl.LongStringHelper
-import com.rabbitmq.client.AMQP.BasicProperties.Builder
-import com.rabbitmq.client.AMQP.BasicProperties
 
 class HeaderValueSpec extends FunSpec with Matchers {
   describe("HeaderValue") {

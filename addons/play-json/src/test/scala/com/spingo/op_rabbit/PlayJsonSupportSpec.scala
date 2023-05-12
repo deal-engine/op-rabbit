@@ -39,7 +39,7 @@ class PlayJsonSupportSpec extends FunSpec with Matchers {
     }
 
     it("serializes the provided content") {
-      val body = m.marshall(Thing(5))
+      m.marshall(Thing(5))
     }
 
     it("provides the appropriate content headers") {

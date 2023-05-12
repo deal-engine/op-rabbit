@@ -84,7 +84,7 @@ object upickleSupport {
       override def marshall(value: T) = api.write(value).getBytes(CHARSET_UTF_8)
     }
 
-    implicit def unmarshaller[T](implicit reader: api.Reader[T], manifest: Manifest[T]): RabbitUnmarshaller[T] = new RabbitUnmarshaller[T] {
+    implicit def unmarshaller[T](implicit reader: api.Reader[T]): RabbitUnmarshaller[T] = new RabbitUnmarshaller[T] {
       override def unmarshall(value: Array[Byte], contentType: Option[String], charset: Option[String]): T = contentType match {
         case Some(value) if !contentType.exists(ALLOWED_CONTENT_TYPES.contains) =>
           throw MismatchedContentType(value, CONTENT_TYPE_APP_JSON)
@@ -104,7 +104,7 @@ object upickleSupport {
       override def marshall(value: T) = api.writeBinary(value)
     }
 
-    implicit def unmarshaller[T](implicit reader: api.Reader[T], manifest: Manifest[T]): RabbitUnmarshaller[T] = new RabbitUnmarshaller[T] {
+    implicit def unmarshaller[T](implicit reader: api.Reader[T]): RabbitUnmarshaller[T] = new RabbitUnmarshaller[T] {
       override def unmarshall(value: Array[Byte], contentType: Option[String], charset: Option[String]): T = contentType match {
         case Some(value) if !contentType.exists(ALLOWED_CONTENT_TYPES.contains) =>
           throw MismatchedContentType(value, CONTENT_TYPE_MSGPACK)

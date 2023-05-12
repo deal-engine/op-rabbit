@@ -203,14 +203,14 @@ trait Directives {
   /**
     Given a [[com.spingo.op_rabbit.properties property]], yields Some(value). If the underlying value does not exist (is null), then it yields None.
     */
-  def optionalProperty[T](extractor: PropertyExtractor[T]) = extract { delivery =>
+  private [op_rabbit] def optionalProperty[T](extractor: PropertyExtractor[T]) = extract { delivery =>
     extractor.extract(delivery.properties)
   }
 
   /**
     Given a [[com.spingo.op_rabbit.properties property]], yields it's value. If the underlying value does not exist (is null), then it nacks.
     */
-  def property[T](extractor: PropertyExtractor[T]) = extractEither { delivery =>
+  private [op_rabbit] def property[T](extractor: PropertyExtractor[T]) = extractEither { delivery =>
     extractor.extract(delivery.properties) match {
       case Some(v) => Right(v)
       case None => Left(

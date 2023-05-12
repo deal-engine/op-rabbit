@@ -162,7 +162,9 @@ object ConnectionParams {
   private def parseAndValidateUriQuery(query: Option[String]): UriQueryParams = {
     query.fold(Array.empty[String])(_.split('&')).foldLeft(UriQueryParams()) {
       case (resp, par) =>
-        val Array(key, value) = par.split('=')
+        val arr = par.split('=')
+        val key = arr(0)
+        val value = arr(1)
         key match {
           case ConnectionTimeoutParamName =>
             resp.copy(connectionTimeout = uriParamValue2Int(ConnectionTimeoutParamName, value))

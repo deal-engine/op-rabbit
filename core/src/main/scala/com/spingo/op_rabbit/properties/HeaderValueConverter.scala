@@ -132,16 +132,24 @@ object FromHeaderValue {
     def apply(hv: HeaderValue): Either[HeaderValueConversionException, Seq[T]] = hv match {
       case SeqHeaderValue(seq) => {
         val builder = Seq.newBuilder[T]
+        var error = Option.empty[HeaderValueConversionException]
         seq foreach { elem =>
-          builder += (subConverter(elem) match {
-            case Right(v) => v
-            case Left(ex) => return Left(HeaderValueConversionException("One or more elements could not be converted", ex))
-          })
+          if(error.isEmpty) {
+            subConverter(elem) match {
+              case Right(v) =>
+                builder += v
+              case Left(ex) =>
+                error = Some(HeaderValueConversionException("One or more elements could not be converted", ex))
+            }
+          }
         }
-        Right(builder.result)
+        error match {
+          case Some(error) => Left(error)
+          case None => Right(builder.result())
+        }
       }
       case _ =>
-        Left(HeaderValueConversionException("${hv} is not a Seq"))
+        Left(HeaderValueConversionException(s"${hv} is not a Seq"))
     }
   }
 
@@ -151,16 +159,22 @@ object FromHeaderValue {
     def apply(hv: HeaderValue): Either[HeaderValueConversionException, Map[String, T]] = hv match {
       case MapHeaderValue(map) => {
         val builder = Map.newBuilder[String, T]
+        var error = Option.empty[HeaderValueConversionException]
         map foreach { case (key, value) =>
-          builder += key -> (subConverter(value) match {
-            case Right(v) => v
-            case Left(ex) => return Left(HeaderValueConversionException("One or more elements could not be converted", ex))
-          })
+          if(error.isEmpty) {
+            subConverter(value) match {
+              case Right(v) => builder += key -> v
+              case Left(ex) => error = Some(HeaderValueConversionException("One or more elements could not be converted", ex))
+            }
+          }
         }
-        Right(builder.result)
+        error match {
+          case Some(error) => Left(error)
+          case None => Right(builder.result())
+        }
       }
       case _ =>
-        Left(HeaderValueConversionException("${hv} is not a Map"))
+        Left(HeaderValueConversionException(s"${hv} is not a Map"))
     }
   }
 

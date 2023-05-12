@@ -2,7 +2,6 @@ package com.spingo.op_rabbit
 
 import akka.actor._
 import com.spingo.op_rabbit.helpers.RabbitTestHelpers
-import com.spingo.op_rabbit.properties.Header
 import com.spingo.scoped_fixtures.ScopedFixtures
 import org.scalatest.{FunSpec, Matchers}
 import scala.concurrent.Promise
@@ -22,7 +21,6 @@ class QueueSpec extends FunSpec with ScopedFixtures with Matchers with RabbitTes
 
       import ExecutionContext.Implicits.global
       implicit val recoveryStrategy = RecoveryStrategy.none
-      val consumerResult = List(Promise[String], Promise[String])
 
       def getSubscription(p: Promise[Unit], leQueue: Binding.QueueDefinition[Binding.Concrete]) =
         Subscription.run(rabbitControl) {

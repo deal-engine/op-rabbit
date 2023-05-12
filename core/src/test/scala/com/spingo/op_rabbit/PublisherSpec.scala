@@ -1,6 +1,5 @@
 package com.spingo.op_rabbit
 
-import com.rabbitmq.client.AMQP.Channel
 import org.scalatest.{FunSpec, Matchers}
 
 class PublisherSpec extends FunSpec with Matchers {

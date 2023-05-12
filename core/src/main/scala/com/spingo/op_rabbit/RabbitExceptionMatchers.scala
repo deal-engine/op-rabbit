@@ -1,10 +1,6 @@
 package com.spingo.op_rabbit
 
-import com.rabbitmq.client.Channel
-import com.rabbitmq.client.ShutdownSignalException
-import java.io.IOException
 import scala.annotation.tailrec
-
 
 object RabbitExceptionMatchers {
   /**

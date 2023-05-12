@@ -1,8 +1,5 @@
 package com.spingo.op_rabbit
 
-import scala.annotation.tailrec
-import scala.util.matching.Regex
-
 class TopicMatcher protected [op_rabbit] (pattern: List[TopicMatcher.Pattern]) {
 
   private def iter(pieces: List[String], remainingPattern: List[TopicMatcher.Pattern], matches: List[String] = List.empty): Option[List[String]] = {

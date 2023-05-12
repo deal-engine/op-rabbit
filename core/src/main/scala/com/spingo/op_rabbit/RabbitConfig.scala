@@ -1,7 +1,6 @@
 package com.spingo.op_rabbit
 
 import akka.actor.ActorSystem
-import scala.util.Try
 import com.typesafe.config.ConfigFactory
 
 object RabbitConfig {

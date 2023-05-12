@@ -4,7 +4,7 @@ import com.spingo.scoped_fixtures.ScopedFixtures
 import com.spingo.op_rabbit.helpers.RabbitTestHelpers
 import org.scalatest.{FunSpec, Matchers}
 import scala.concurrent.ExecutionContext
-import scala.util.{Try,Failure}
+import scala.util.Try
 
 class SubscriptionSpec extends FunSpec with ScopedFixtures with Matchers with RabbitTestHelpers {
 
@@ -26,7 +26,7 @@ class SubscriptionSpec extends FunSpec with ScopedFixtures with Matchers with Ra
             }
           }
         }
-        val Failure(ex) = Try(await(s.initialized))
+        val ex = Try(await(s.initialized)).failed.get
         ex.getMessage() should include ("no queue 'very-queue' in vhost")
       }
     }
