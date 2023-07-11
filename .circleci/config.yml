@@ -15,7 +15,7 @@ workflows:
           steps:
             - run:
                 name: Run rabbitmq for testing
-                command: docker run --rm -p 5672:5672 rabbitmq:3-alpine
+                command: docker run --rm -p 5672:5672 rabbitmq:3
                 background: true
             - run:
                 name: Wait for rabbit to be ready
@@ -24,7 +24,7 @@ workflows:
 
                   until docker exec -it $(docker container ls  | grep 'rabbit' | awk '{print $1}') rabbitmq-diagnostics -q ping;
                   do
-                    echo "Rabbitmq not ready yet"
+                    echo "Waiting for Rabbitmq to start..."
                     sleep 1;
                   done
             - run:
