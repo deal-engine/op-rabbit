@@ -10,17 +10,30 @@ workflows:
     jobs:
       - codacy/checkout_and_version:
           write_sbt_version: true
-      - codacy/sbt_docker:
+      - codacy/sbt:
           name: test
           steps:
             - run:
-                name: Compile tests
-                command: sbt +test:compile
-          setup_remote_docker: false
+                name: Run rabbitmq for testing
+                command: docker run --user rabbitmq --rm -p 5672:5672 rabbitmq:3
+                background: true
+            - run:
+                name: Wait for rabbit to be ready
+                command: |
+                  sleep 1;
+
+                  until docker logs $(docker container ls  | grep 'rabbit' | awk '{print $1}') | grep "Time to start RabbitMQ";
+                  do
+                    echo "Waiting for Rabbitmq to start..."
+                    sleep 1;
+                  done
+            - run:
+                name: Run tests
+                command: sbt +test
           context: CodacyAWS
           requires:
             - codacy/checkout_and_version
-      - codacy/sbt_docker:
+      - codacy/sbt:
           name: publish
           steps:
             - run:
@@ -32,7 +45,6 @@ workflows:
             - run:
                 name: Release bundle to Sonatype
                 command: sbt sonatypeBundleRelease
-          setup_remote_docker: false
           context: CodacyAWS
           requires:
             - test
