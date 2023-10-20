@@ -45,7 +45,6 @@ workflows:
             - run:
                 name: Release bundle to Sonatype
                 command: sbt sonatypeBundleRelease
-          setup_remote_docker: false
           context: CodacyAWS
           requires:
             - test
