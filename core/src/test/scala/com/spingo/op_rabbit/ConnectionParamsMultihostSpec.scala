@@ -19,21 +19,21 @@ class ConnectionParamsMultihostSpec extends FunSpec with Matchers {
   describe("fromConfig constructor") {
     describe("reading from artificially created config") {
       it("accepts hosts as array of strings") {
-        val hosts = List("127.0.0.1", "github.com")
+        val hosts = List("localhost", "github.com")
         val config = makeConfig(hosts, defaultConfig)
 
         assertHosts(config, hosts)
       }
 
       it("accepts hosts as comma-separated string") {
-        val hosts = List("127.0.0.1", "github.com")
+        val hosts = List("localhost", "github.com")
         val config = makeConfig(hosts.mkString(","), defaultConfig)
 
         assertHosts(config, hosts)
       }
 
       it("trims extra whitespace in comma-separated list") {
-        val hosts = List("127.0.0.1", "github.com")
+        val hosts = List("localhost", "github.com")
         val config = makeConfig(hosts.map(str => " " + str + " ").mkString(","), defaultConfig)
 
         assertHosts(config, hosts)
@@ -41,7 +41,7 @@ class ConnectionParamsMultihostSpec extends FunSpec with Matchers {
     }
 
     describe("reading from real config file") {
-      val expectedHosts = List("127.0.0.1", "127.0.0.1")
+      val expectedHosts = List("localhost", "127.0.0.1")
       it("accepts hosts as array of strings") {
         val config = ConfigFactory.load("config_fixtures/hosts.list.conf").getConfig("op-rabbit.connection")
 
