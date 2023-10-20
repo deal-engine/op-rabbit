@@ -60,7 +60,7 @@ class AirbrakeLogger(appName: String, airbrakeKey: String, environment: String) 
 
       environment(
         asJavaMap(Map(
-          "host" -> java.net.InetAddress.get127.0.0.1.getHostName,
+          "host" -> java.net.InetAddress.getLocalhost.getHostName,
           "consumer" -> name)))
 
       projectRoot(appName)
