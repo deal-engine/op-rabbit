@@ -21,7 +21,7 @@ val commonSettings = Seq(
   libraryDependencies ++= Seq(
     "com.chuusai" %%  "shapeless" % "2.3.7",
     "com.typesafe" % "config" % "1.4.1",
-    "com.newmotion" %% "akka-rabbitmq" % "6.0.0",
+    "com.github.pjfanning" %% "akka-rabbitmq" % "6.1.0",
     "org.slf4j" % "slf4j-api" % "1.7.32",
     "ch.qos.logback" % "logback-classic" % "1.2.5" % "test",
     "org.scalatest" %% "scalatest" % "3.0.8" % "test",
