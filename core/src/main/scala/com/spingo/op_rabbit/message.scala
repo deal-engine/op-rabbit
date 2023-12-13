@@ -1,11 +1,13 @@
 package com.spingo.op_rabbit
 
+import scala.concurrent.{Future, Promise}
+import scala.concurrent.duration._
+import scala.language.postfixOps
+import scala.util.Try
+
 import akka.actor.ActorSystem
 import com.rabbitmq.client.AMQP.BasicProperties
 import com.rabbitmq.client.Channel
-import scala.concurrent.{Future, Promise}
-import scala.concurrent.duration._
-import scala.util.Try
 import com.spingo.op_rabbit.properties._
 
 object ModeledMessageHeaders {
