@@ -1,10 +1,10 @@
 package com.spingo.op_rabbit
 
-import org.scalatest.FunSpec
-import org.scalatest.Matchers
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.libs.json._
 
-class PlayJsonSupportSpec extends FunSpec with Matchers {
+class PlayJsonSupportSpec extends AnyFunSpec with Matchers {
   case class Thing(a: Int)
   implicit val thingFormat = Json.format[Thing]
   import PlayJsonSupport._

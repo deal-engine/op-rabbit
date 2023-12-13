@@ -1,12 +1,10 @@
 package com.spingo.op_rabbit.properties
 
-import org.scalatest.{FunSpec, Matchers}
-import com.spingo.op_rabbit.properties._
 import com.rabbitmq.client.impl.LongStringHelper
-import com.rabbitmq.client.AMQP.BasicProperties.Builder
-import com.rabbitmq.client.AMQP.BasicProperties
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class HeaderValueSpec extends FunSpec with Matchers {
+class HeaderValueSpec extends AnyFunSpec with Matchers {
   describe("HeaderValue") {
     it("tries its best to pull a string via asString") {
       val string = "I can haz le string"

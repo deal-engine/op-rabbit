@@ -3,13 +3,15 @@ language: scala
 dist: trusty
 
 scala:
-  - 2.12.10
+  - 2.13.12
 
 jdk:
   - oraclejdk11
 
 services:
   - rabbitmq
+
+script: sbt '+ test'
 
 sudo: false
 
