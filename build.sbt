@@ -16,8 +16,8 @@ val assertNoApplicationConf = taskKey[Unit]("Makes sure application.conf isn't p
 val commonSettings = Seq(
   organization := "com.spingo",
   version := appProperties.getProperty("version"),
-  scalaVersion := "2.13.6",
-  crossScalaVersions := Seq("2.12.15", "2.13.6"),
+  scalaVersion := "2.13.12",
+  crossScalaVersions := Seq("2.12.15", "2.13.12"),
   libraryDependencies ++= Seq(
     "com.chuusai" %%  "shapeless" % "2.3.7",
     "com.typesafe" % "config" % "1.4.1",
