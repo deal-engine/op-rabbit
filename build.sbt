@@ -117,12 +117,7 @@ lazy val upickle = (project in file("./addons/upickle")).
   settings(commonSettings: _*).
   settings(
     name := "op-rabbit-upickle",
-    libraryDependencies += "com.lihaoyi" %% "upickle" % (
-      CrossVersion.partialVersion(scalaVersion.value) match {
-        case Some((2, 11)) => "0.7.4"
-        case _ => "1.2.2"
-      }
-    )).
+    libraryDependencies += "com.lihaoyi" %% "upickle" % "2.0.0").
   dependsOn(core)
 
 lazy val airbrake = (project in file("./addons/airbrake/")).
