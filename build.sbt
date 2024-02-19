@@ -17,7 +17,7 @@ val commonSettings = Seq(
   organization := "com.spingo",
   version := appProperties.getProperty("version"),
   scalaVersion := "2.13.12",
-  crossScalaVersions := Seq("2.12.15", "2.13.12"),
+  crossScalaVersions := Seq("2.13.12"),
   resolvers += "jitpack" at "https://jitpack.io",
   libraryDependencies ++= Seq(
     "com.chuusai" %%  "shapeless" % "2.3.10",
