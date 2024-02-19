@@ -18,10 +18,11 @@ val commonSettings = Seq(
   version := appProperties.getProperty("version"),
   scalaVersion := "2.13.12",
   crossScalaVersions := Seq("2.12.15", "2.13.12"),
+  resolvers += "jitpack" at "https://jitpack.io",
   libraryDependencies ++= Seq(
     "com.chuusai" %%  "shapeless" % "2.3.10",
     "com.typesafe" % "config" % "1.4.3",
-    "com.github.pjfanning" %% "akka-rabbitmq" % "6.1.0",
+    "com.github.deal-engine" % "akka-rabbitmq" % "6.2.0",
     "org.slf4j" % "slf4j-api" % "2.0.9",
     "ch.qos.logback" % "logback-classic" % "1.4.14" % "test",
     "org.scalatest" %% "scalatest" % "3.2.17" % "test",
@@ -131,8 +132,6 @@ lazy val `akka-stream` = (project in file("./addons/akka-stream")).
   settings(commonSettings: _*).
   settings(
     name := "op-rabbit-akka-stream",
-    // Temporarily depend on jitpack published version of acked-streams for scala 2.13
-    resolvers += "jitpack" at "https://jitpack.io",
     libraryDependencies ++= Seq(
       // TODO: remove and switch to com.timcharper when https://github.com/timcharper/acked-stream/pull/10 gets merged and published
       //  "com.timcharper"    %% "acked-streams" % "2.1.1",
