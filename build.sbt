@@ -118,7 +118,7 @@ lazy val upickle = (project in file("./addons/upickle")).
   settings(commonSettings: _*).
   settings(
     name := "op-rabbit-upickle",
-    libraryDependencies += "com.lihaoyi" %% "upickle" % "2.0.0").
+    libraryDependencies += "com.lihaoyi" %% "upickle" % "3.3.1").
   dependsOn(core)
 
 lazy val airbrake = (project in file("./addons/airbrake/")).
